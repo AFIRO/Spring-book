@@ -71,4 +71,8 @@ public class SecurityUser implements UserDetails {
     public void setFavoriteBookIds(List<String> ids){
         this.favoriteBookIds = ids;
     }
+
+    public ApplicationUser getApplicationUser() {
+        return applicationUser;
+    }
 }

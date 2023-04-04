@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <html xmlns:th="http://www.thymeleaf.org">>
+<html xmlns:th="http://www.thymeleaf.org">>
 <head>
     <meta charset="UTF-8">
     <title th:text="${book.title} + ': Detail'">Book Detail</title>
@@ -8,13 +8,13 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <p th:text="'Welcome, ' + ${#authentication.principal.username} + ' !'"></p>
+    <p th:text="'Your current role is: ' + ${#authentication.principal.getApplicationUser().getRole().toString()} + '.'"></p>
     <ul>
         <li><a th:href="@{/}">Books</a></li>
         <li><a th:href="@{/books/favorites}">Favorites</a></li>
         <li><a th:href="@{/logout}">Logout</a></li>
     </ul>
 </nav>
-
 
 
 <h1 th:text="${book.title}">Book Detail</h1>
@@ -56,13 +56,14 @@
             </ul>
         </td>
     </tr>
-    <tr>
+    <tr >
         <th>Favoriet:</th>
         <td>
             <form method="post" th:action="@{/markAsFavorite}" th:object="${favoriteDto}">
                 <input type="hidden" name="userId" th:value="${#authentication.principal.getUserId()}" />
                 <input type="hidden" name="bookId" th:value="${book.bookId}" />
-                <button type="submit" class="btn btn-primary"
+                <button th:if="${#authentication.principal.getFavoriteBookIds().size() < #authentication.principal.getApplicationUser().getMaxNumberOfFavorites() ||
+                #authentication.principal.getFavoriteBookIds().contains(book.bookId)}" type="submit" class="btn btn-primary"
                         th:text="${#authentication.principal.getFavoriteBookIds().contains(book.bookId) ? 'Remove from Favorites' : 'Add to Favorites'}">
                 </button>
             </form>

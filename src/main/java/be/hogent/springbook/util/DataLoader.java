@@ -44,6 +44,7 @@ public class DataLoader {
                 .email("admin")
                 .password("$2a$12$Mwbsu7NxN6jCDSmaHahk2eUT0Yhdcg02LZVdQa9tG9josq.rthVr.")
                 .role(UserRole.ADMIN)
+                .maxNumberOfFavorites(2)
                 .build();
 
         ApplicationUser user = ApplicationUser.builder()
