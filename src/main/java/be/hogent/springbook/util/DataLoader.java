@@ -78,12 +78,24 @@ public class DataLoader {
                         Location.builder().locationName("LOC").locationCode1(200).locationCode2(50).build(),
                         Location.builder().locationName("LOD").locationCode1(200).locationCode2(50).build(),
                         Location.builder().locationName("LOA").locationCode1(200).locationCode2(50).build()))
-                .numberOfTimesFavorited(4)
+                .numberOfTimesFavorited(2)
                 .price(99.9)
                 .title("Is een")
                 .build();
 
-        bookRepository.saveAll(List.of(book1, book2));
+        Book book3 = Book.builder()
+                .authors(List.of(Author.builder().name("Jean-Pierre Van Rossem").build()))
+                .isbn("978-9-05-759315-4")
+                .locations(List.of(
+                        Location.builder().locationName("LOC").locationCode1(200).locationCode2(50).build(),
+                        Location.builder().locationName("LOD").locationCode1(200).locationCode2(50).build(),
+                        Location.builder().locationName("LOA").locationCode1(200).locationCode2(50).build()))
+                .numberOfTimesFavorited(35)
+                .price(99.9)
+                .title("Hoer")
+                .build();
+
+        bookRepository.saveAll(List.of(book1, book2, book3));
     }
 
 

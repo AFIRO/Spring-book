@@ -8,7 +8,6 @@ import be.hogent.springbook.book.repository.AuthorRepository;
 import be.hogent.springbook.book.repository.BookRepository;
 import be.hogent.springbook.user.entity.ApplicationUser;
 import be.hogent.springbook.user.repository.UserRepository;
-import be.hogent.springbook.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -67,9 +66,9 @@ public class BookService {
         List<Book> allBooks = getAll();
         allBooks.sort((o1, o2) -> {
             if (o1.getNumberOfTimesFavorited() == o2.getNumberOfTimesFavorited()) {
-                return o1.getTitle().compareTo(o2.getTitle());
+                return -1 * o1.getTitle().compareTo(o2.getTitle());
             } else {
-                return Integer.compare(o1.getNumberOfTimesFavorited(), o2.getNumberOfTimesFavorited());
+                return -1 * Integer.compare(o1.getNumberOfTimesFavorited(), o2.getNumberOfTimesFavorited());
             }
         });
         return allBooks;
@@ -86,30 +85,15 @@ public class BookService {
         Book potentialBook = this.getById(bookId);
 
         if (!potentialApplicationUser.getFavoriteBooks().contains(potentialBook)){
+            log.info("Adding book to favorites.");
             potentialApplicationUser.getFavoriteBooks().add(potentialBook);
             potentialBook.setNumberOfTimesFavorited(potentialBook.getNumberOfTimesFavorited()+1);
             userRepository.save(potentialApplicationUser);
         } else {
-            throw new IllegalArgumentException();
-        }
-
-    }
-
-    public void unmarkBookAsFavorite(String userId, String bookId){
-        ApplicationUser potentialApplicationUser = userRepository.findById(userId)
-                .orElseThrow(() -> {
-                    log.error("user {} not found in database.", userId);
-                    return new IllegalArgumentException(USER_NOT_FOUND);
-                });
-
-        Book potentialBook = this.getById(bookId);
-
-        if (potentialApplicationUser.getFavoriteBooks().contains(potentialBook)){
+            log.info("Removing book from favorites.");
             potentialApplicationUser.getFavoriteBooks().remove(potentialBook);
             potentialBook.setNumberOfTimesFavorited(potentialBook.getNumberOfTimesFavorited()-1);
             userRepository.save(potentialApplicationUser);
-        } else {
-            throw new IllegalArgumentException();
         }
     }
     }

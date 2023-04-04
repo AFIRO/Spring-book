@@ -1,15 +1,10 @@
 package be.hogent.springbook.security.config;
 
 import be.hogent.springbook.security.service.SecurityService;
-import be.hogent.springbook.user.service.UserService;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
@@ -32,6 +27,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.anyRequest().authenticated())
                 .formLogin(withDefaults())
+                .logout(logout->
+                        logout.logoutUrl("/logout")
+                                .logoutSuccessUrl("/")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID"))
                 .build();
     }
 

@@ -1,12 +1,15 @@
 package be.hogent.springbook.security.entity;
 
+import be.hogent.springbook.book.entity.Book;
 import be.hogent.springbook.user.entity.ApplicationUser;
+import be.hogent.springbook.user.entity.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class SecurityUser implements UserDetails {
     private ApplicationUser applicationUser;
@@ -50,5 +53,13 @@ public class SecurityUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean isAdmin() {return applicationUser.getRole().equals(UserRole.ADMIN);}
+
+    public String getUserId() {return applicationUser.getUserId();}
+
+    public List<String> getFavoriteBookIds() {
+        return applicationUser.getFavoriteBooks().stream().map(Book::getBookId).toList();
     }
 }

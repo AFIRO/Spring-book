@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html <html xmlns:th="http://www.thymeleaf.org">>
 <head>
     <meta charset="UTF-8">
-    <title th:text="${book.title}">Book Detail</title>
+    <title th:text="${book.title} + ': Detail'">Book Detail</title>
     <link rel="stylesheet" type="text/css" href="/css/book-detail.css">
 </head>
 <body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <p th:text="'Welcome, ' + ${#authentication.principal.username} + ' !'"></p>
+    <ul>
+        <li><a th:href="@{/}">Books</a></li>
+        <li><a th:href="@{/books/favorites}">Favorites</a></li>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</nav>
+
+
+
 <h1 th:text="${book.title}">Book Detail</h1>
 <table>
     <tr>

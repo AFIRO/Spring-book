@@ -35,7 +35,6 @@
         <th>Times Favorited</th>
         <th>Price</th>
         <th>Location</th>
-        <th>Favorite</th>
     </tr>
     </thead>
     <tbody>
@@ -54,15 +53,6 @@
                 <li th:each="location : ${book.locations}" th:text="${location.locationCode1 + ':' + location.locationCode2 + ' - ' + location.locationName}"></li>
             </ul>
         </td>
-            <td>
-                <form method="post" th:action="@{/markAsFavorite}" th:object="${favoriteDto}">
-                    <input type="hidden" name="userId" th:value="${#authentication.principal.getUserId()}" />
-                    <input type="hidden" name="bookId" th:value="${book.bookId}" />
-                    <button type="submit" class="btn btn-primary"
-                            th:text="'Mark or unmark as favorite'">
-                    </button>
-                </form>
-            </td>
     </tr>
     </tbody>
 </table>

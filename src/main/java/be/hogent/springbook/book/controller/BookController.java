@@ -1,5 +1,6 @@
 package be.hogent.springbook.book.controller;
 
+import be.hogent.springbook.book.entity.FavoriteDto;
 import be.hogent.springbook.book.entity.dto.BookDto;
 import be.hogent.springbook.book.mapper.BookMapper;
 import be.hogent.springbook.book.service.BookService;
@@ -18,7 +19,7 @@ public class BookController {
     private final BookService bookService;
     private final BookMapper bookMapper;
 
-    @GetMapping("/books")
+    @GetMapping("/")
     public String getBooks(Model model) {
         log.info("Get all books called by Thymeleaf.");
         List<BookDto> books = bookService.getAll().stream().map(bookMapper::toDto).toList();
@@ -53,17 +54,10 @@ public class BookController {
         return "bookcreate";
     }
 
-    @PostMapping("/favorite/{userId}/{bookId}")
-    public String markBookAsFavorite(@PathVariable("userId") String userId, @PathVariable("bookId") String bookId ) {
-        log.info("Mark book {} as favorite for user {} called by Thymeleaf.", bookId, userId);
-        bookService.markBookAsFavorite(userId,bookId);
-        return "favorite";
-    }
-
-    @PostMapping("/unfavorite/{userId}/{bookId}")
-    public String unmarkBookAsFavorite(@PathVariable("userId") String userId, @PathVariable("bookId") String bookId ) {
-        log.info("Unmark book {} as favorite for user {} called by Thymeleaf.", bookId, userId);
-        bookService.unmarkBookAsFavorite(userId,bookId);
-        return "unfavorite";
+    @PostMapping("/markAsFavorite")
+    public String markBookAsFavorite(@ModelAttribute("favoriteDto") FavoriteDto favorite) {
+        log.info("Mark book {} as favorite for user {} called by Thymeleaf.", favorite.getBookId(), favorite.getUserId());
+        bookService.markBookAsFavorite(favorite.getUserId(),favorite.getBookId());
+        return "redirect:/";
     }
 }
