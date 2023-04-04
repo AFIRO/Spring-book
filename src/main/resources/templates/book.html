@@ -56,6 +56,18 @@
             </ul>
         </td>
     </tr>
+    <tr>
+        <th>Favoriet:</th>
+        <td>
+            <form method="post" th:action="@{/markAsFavorite}" th:object="${favoriteDto}">
+                <input type="hidden" name="userId" th:value="${#authentication.principal.getUserId()}" />
+                <input type="hidden" name="bookId" th:value="${book.bookId}" />
+                <button type="submit" class="btn btn-primary"
+                        th:text="${#authentication.principal.getFavoriteBookIds().contains(book.bookId) ? 'Remove from Favorites' : 'Add to Favorites'}">
+                </button>
+            </form>
+        </td>
+    </tr>
 </table>
 </body>
 </html>

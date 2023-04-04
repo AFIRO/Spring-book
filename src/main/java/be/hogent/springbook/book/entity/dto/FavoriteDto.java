@@ -1,4 +1,4 @@
-package be.hogent.springbook.book.entity;
+package be.hogent.springbook.book.entity.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

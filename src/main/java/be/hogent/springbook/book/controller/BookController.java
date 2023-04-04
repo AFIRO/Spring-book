@@ -1,6 +1,6 @@
 package be.hogent.springbook.book.controller;
 
-import be.hogent.springbook.book.entity.FavoriteDto;
+import be.hogent.springbook.book.entity.dto.FavoriteDto;
 import be.hogent.springbook.book.entity.dto.BookDto;
 import be.hogent.springbook.book.mapper.BookMapper;
 import be.hogent.springbook.book.service.BookService;
@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class BookController {
     @PostMapping("/markAsFavorite")
     public String markBookAsFavorite(@ModelAttribute("favoriteDto") FavoriteDto favorite) {
         log.info("Mark book {} as favorite for user {} called by Thymeleaf.", favorite.getBookId(), favorite.getUserId());
-        bookService.markBookAsFavorite(favorite.getUserId(),favorite.getBookId());
-        return "redirect:/";
+        String feedback = bookService.markBookAsFavorite(favorite.getUserId(),favorite.getBookId());
+        return "redirect:/?success=" + feedback;
     }
 }

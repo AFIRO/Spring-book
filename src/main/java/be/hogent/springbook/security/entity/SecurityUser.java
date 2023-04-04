@@ -3,6 +3,7 @@ package be.hogent.springbook.security.entity;
 import be.hogent.springbook.book.entity.Book;
 import be.hogent.springbook.user.entity.ApplicationUser;
 import be.hogent.springbook.user.entity.UserRole;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,13 +12,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+@Data
+
 public class SecurityUser implements UserDetails {
     private ApplicationUser applicationUser;
+    private List<String> favoriteBookIds;
 
     public SecurityUser(ApplicationUser applicationUser) {
         System.out.println(applicationUser.getEmail());
         System.out.println(applicationUser.getPassword());
         this.applicationUser = applicationUser;
+        this.favoriteBookIds = applicationUser.getFavoriteBooks().stream().map(Book::getBookId).toList();
     }
 
     @Override
@@ -59,7 +64,11 @@ public class SecurityUser implements UserDetails {
 
     public String getUserId() {return applicationUser.getUserId();}
 
-    public List<String> getFavoriteBookIds() {
-        return applicationUser.getFavoriteBooks().stream().map(Book::getBookId).toList();
+    public List<String> getFavoriteBookIds(){
+        return this.favoriteBookIds;
+    }
+
+    public void setFavoriteBookIds(List<String> ids){
+        this.favoriteBookIds = ids;
     }
 }

@@ -6,10 +6,14 @@ import be.hogent.springbook.book.entity.dto.BookDto;
 import be.hogent.springbook.book.mapper.BookMapper;
 import be.hogent.springbook.book.repository.AuthorRepository;
 import be.hogent.springbook.book.repository.BookRepository;
+import be.hogent.springbook.security.entity.SecurityUser;
 import be.hogent.springbook.user.entity.ApplicationUser;
 import be.hogent.springbook.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -75,7 +79,8 @@ public class BookService {
     }
 
 
-    public void markBookAsFavorite(String userId, String bookId){
+    public String markBookAsFavorite(String userId, String bookId){
+        String feedbackMessage = "";
         ApplicationUser potentialApplicationUser = userRepository.findById(userId)
                 .orElseThrow(() -> {
                     log.error("user {} not found in database.", userId);
@@ -89,12 +94,21 @@ public class BookService {
             potentialApplicationUser.getFavoriteBooks().add(potentialBook);
             potentialBook.setNumberOfTimesFavorited(potentialBook.getNumberOfTimesFavorited()+1);
             userRepository.save(potentialApplicationUser);
+            feedbackMessage = "Book " + potentialBook.getTitle() + " has been favorited succesfully!";
         } else {
             log.info("Removing book from favorites.");
             potentialApplicationUser.getFavoriteBooks().remove(potentialBook);
             potentialBook.setNumberOfTimesFavorited(potentialBook.getNumberOfTimesFavorited()-1);
             userRepository.save(potentialApplicationUser);
+            feedbackMessage = "Book " + potentialBook.getTitle() + " has been unfavorited succesfully!";
         }
+        //refresh spring security user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SecurityUser loggedInUser = (SecurityUser) authentication.getPrincipal();
+        loggedInUser.setFavoriteBookIds(potentialApplicationUser.getFavoriteBooks().stream().map(Book::getBookId).toList());
+        Authentication updatedAuthentication = new UsernamePasswordAuthenticationToken(loggedInUser, loggedInUser.getPassword(), loggedInUser.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
+        return feedbackMessage;
     }
-    }
+}
 
