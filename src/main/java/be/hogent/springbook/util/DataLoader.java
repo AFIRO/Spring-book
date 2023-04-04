@@ -41,13 +41,13 @@ public class DataLoader {
     private void seedApplicationUsers() {
         //seed application users
         ApplicationUser admin = ApplicationUser.builder()
-                .email("admin@hogent.be")
+                .email("admin")
                 .password("$2a$12$Mwbsu7NxN6jCDSmaHahk2eUT0Yhdcg02LZVdQa9tG9josq.rthVr.")
                 .role(UserRole.ADMIN)
                 .build();
 
         ApplicationUser user = ApplicationUser.builder()
-                .email("user@hogent.be")
+                .email("user")
                 .password("$2a$12$XsB5EQhYuMCWJ41nF6opF.4PV6gGNyzAgJOC.iu.jHE1xuYCXHYiy")
                 .role(UserRole.USER)
                 .build();
@@ -56,16 +56,34 @@ public class DataLoader {
     }
 
     private void seedBooks() {
-        Book book = Book.builder()
-                .authors(List.of(Author.builder().name("Jacques Firenze").build()))
+
+
+        Book book1 = Book.builder()
+                .authors(List.of(Author.builder().name("Jacques Firenze").build(),
+                        Author.builder().name("Quinte Ridz").build()))
                 .isbn("978-0-13-468599-1")
-                .locations(List.of(Location.builder().locationName("LOC").locationCode1(50).locationCode2(200).build()))
+                .locations(List.of(
+                        Location.builder().locationName("LOC").locationCode1(200).locationCode2(50).build(),
+                        Location.builder().locationName("LOD").locationCode1(200).locationCode2(50).build(),
+                        Location.builder().locationName("LOA").locationCode1(200).locationCode2(50).build()))
                 .numberOfTimesFavorited(4)
                 .price(99.9)
                 .title("Uw Moeder")
                 .build();
 
-        bookRepository.save(book);
+        Book book2 = Book.builder()
+                .authors(List.of(Author.builder().name("Jacques Firenze").build()))
+                .isbn("978-1-23-456789-7")
+                .locations(List.of(
+                        Location.builder().locationName("LOC").locationCode1(200).locationCode2(50).build(),
+                        Location.builder().locationName("LOD").locationCode1(200).locationCode2(50).build(),
+                        Location.builder().locationName("LOA").locationCode1(200).locationCode2(50).build()))
+                .numberOfTimesFavorited(4)
+                .price(99.9)
+                .title("Is een")
+                .build();
+
+        bookRepository.saveAll(List.of(book1, book2));
     }
 
 

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class BookMapper {
-    private LocationMapper locationMapper;
-    private AuthorMapper authorMapper;
+    private final LocationMapper locationMapper;
+    private final AuthorMapper authorMapper;
 
     public BookDto toDto(Book data){
         return BookDto.builder()

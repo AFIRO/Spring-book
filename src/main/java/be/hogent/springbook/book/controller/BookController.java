@@ -3,7 +3,6 @@ package be.hogent.springbook.book.controller;
 import be.hogent.springbook.book.entity.dto.BookDto;
 import be.hogent.springbook.book.mapper.BookMapper;
 import be.hogent.springbook.book.service.BookService;
-import be.hogent.springbook.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ public class BookController {
         log.info("Get all books called by Thymeleaf.");
         List<BookDto> books = bookService.getAll().stream().map(bookMapper::toDto).toList();
         model.addAttribute("books", books);
-        return "books";
+        return "booklist";
     }
 
     @GetMapping("/books/favorites")
@@ -32,10 +31,10 @@ public class BookController {
         log.info("Get all books called by Thymeleaf.");
         List<BookDto> books = bookService.getAllSortedByFavorites().stream().map(bookMapper::toDto).toList();
         model.addAttribute("books", books);
-        return "books";
+        return "booksfavorites";
     }
 
-    @GetMapping("/book/{id}")
+    @GetMapping("/books/{id}")
     public String getBookById(Model model, @PathVariable("id") String id) {
         log.info("Get book by Id {} called by Thymeleaf.", id);
         BookDto book = bookMapper.toDto(bookService.getById(id));
@@ -51,7 +50,7 @@ public class BookController {
         }
         BookDto book = bookMapper.toDto(bookService.createBook(data));
         model.addAttribute("book", book);
-        return "book";
+        return "bookcreate";
     }
 
     @PostMapping("/favorite/{userId}/{bookId}")

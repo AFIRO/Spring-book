@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${book.title}">Book Detail</title>
+    <link rel="stylesheet" type="text/css" href="/css/book-detail.css">
+</head>
+<body>
+<h1 th:text="${book.title}">Book Detail</h1>
+<table>
+    <tr>
+        <th>ID:</th>
+        <td th:text="${book.bookId}"></td>
+    </tr>
+    <tr>
+        <th>Title:</th>
+        <td th:text="${book.title}"></td>
+    </tr>
+    <tr>
+        <th>ISBN:</th>
+        <td th:text="${book.isbn}"></td>
+    </tr>
+
+    <tr>
+        <th>Times Favorited:</th>
+        <td th:text="${book.numberOfTimesFavorited}"></td>
+    </tr>
+    <tr>
+        <th>Authors:</th>
+        <td>
+            <ul>
+                <li th:each="author : ${book.authors}" th:text="${author.name}"></li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <th>Price:</th>
+        <td th:text="${book.price}"></td>
+    </tr>
+    <tr>
+        <th>Location:</th>
+        <td>
+            <ul>
+                <li th:each="location : ${book.locations}" th:text="${location.locationCode1 + ':' + location.locationCode2 + ' - ' + location.locationName}"></li>
+            </ul>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

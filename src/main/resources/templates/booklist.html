@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Spring Book</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+
+    <link rel="stylesheet" href="/css/booklist.css" th:href="@{/css/booklist.css}">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Book-list</a>
+    <a class="navbar-brand" href="#">Favorites</a>
+    <a class="navbar-brand" href="#">Logout</a>
+</nav>
+<h1>Book List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Authors</th>
+        <th>ISBN</th>
+        <th>Times Favorited</th>
+        <th>Price</th>
+        <th>Location</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="book : ${books}" th:onclick="'javascript:location.href=&quot;/books/&quot; + ${book.bookId}'">
+        <td th:text="${book.title}"></td>
+        <td>
+            <ul>
+                <li th:each="author : ${book.authors}" th:text="${author.name}"></li>
+            </ul>
+        </td>
+        <td th:text="${book.isbn}"></td>
+        <td th:text="${book.numberOfTimesFavorited}"></td>
+        <td th:text="${book.price}"></td>
+        <td>
+            <ul>
+                <li th:each="location : ${book.locations}" th:text="${location.locationCode1 + ':' + location.locationCode2 + ' - ' + location.locationName}"></li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
