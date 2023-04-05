@@ -119,5 +119,9 @@ public class BookService {
         newBook.setLocations(newBook.getLocations().stream().filter(location -> !(location.getLocationCode1() == 0 && location.getLocationCode2() == 0 && location.getLocationName().isEmpty())).toList());
     }
 
+    public void deleteBook(String id) {
+        Book potentialBook = getById(id);
+        bookRepository.delete(potentialBook);
+    }
 }
 

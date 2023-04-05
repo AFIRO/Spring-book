@@ -74,4 +74,10 @@ public class BookController {
         return "redirect:/?success=" + feedback;
     }
 
+    @PostMapping("/books/{id}/delete")
+    public String deleteBook(@PathVariable String id) {
+        bookService.deleteBook(id);
+        return "redirect:/?success=Book has been deleted succesfully.";
+    }
+
 }

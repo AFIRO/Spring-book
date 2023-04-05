@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title th:text="${book.title} + ': Detail'">Book Detail</title>
     <link rel="stylesheet" type="text/css" href="/css/book-detail.css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+<nav>
     <p th:text="'Welcome, ' + ${#authentication.principal.username} + ' !'"></p>
     <p th:text="'Your current role is: ' + ${#authentication.principal.getApplicationUser().getRole().toString()} + '.'"></p>
     <ul>
@@ -69,6 +70,15 @@
             </form>
         </td>
     </tr>
+    <tr th:if="${#authentication.principal.isAdmin()}">
+        <th>Admin Options:</th>
+        <td>
+        <form method="post" th:action="@{/books/__${book.bookId}__/delete}">
+            <button method="post" th:action="@{/books/__${book.bookId}__/delete}" type="submit" class="btn-danger">Delete</button>
+        </form>
+        </td>
+    </tr>
 </table>
+</div>
 </body>
 </html>

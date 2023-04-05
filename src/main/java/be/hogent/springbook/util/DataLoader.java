@@ -51,6 +51,7 @@ public class DataLoader {
                 .email("user")
                 .password("$2a$12$XsB5EQhYuMCWJ41nF6opF.4PV6gGNyzAgJOC.iu.jHE1xuYCXHYiy")
                 .role(UserRole.USER)
+                .maxNumberOfFavorites(3)
                 .build();
 
         userRepository.saveAll(Arrays.asList(user, admin));
