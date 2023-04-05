@@ -44,7 +44,7 @@ public class BookController {
         return "book";
     }
 
-    @PostMapping("/book/{id}")
+    @PostMapping("/books/")
     public String createBook(Model model, @ModelAttribute BookDto data) {
         log.info("Create book called by Thymeleaf.");
         if (data.getBookId() != null){

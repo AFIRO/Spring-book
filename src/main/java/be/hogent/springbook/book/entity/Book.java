@@ -22,7 +22,6 @@ public class Book {
     private String title;
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Author> authors;
-    @ISBN
     @Column(unique = true)
     private String isbn;
     private double price;

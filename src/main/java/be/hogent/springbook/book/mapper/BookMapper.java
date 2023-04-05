@@ -27,7 +27,7 @@ public class BookMapper {
     public Book toEntity(BookDto data){
         return Book.builder()
                 .bookId(data.getBookId())
-                .isbn(data.getIsbn())
+                .isbn(data.getIsbn().trim().replaceAll("[^0-9]", ""))
                 .title(data.getTitle())
                 .numberOfTimesFavorited(data.getNumberOfTimesFavorited())
                 .price(data.getPrice())
