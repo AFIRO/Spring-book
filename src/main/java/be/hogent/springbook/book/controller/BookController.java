@@ -4,12 +4,13 @@ import be.hogent.springbook.book.entity.dto.FavoriteDto;
 import be.hogent.springbook.book.entity.dto.BookDto;
 import be.hogent.springbook.book.mapper.BookMapper;
 import be.hogent.springbook.book.service.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -44,21 +45,33 @@ public class BookController {
         return "book";
     }
 
-    @PostMapping("/books/")
-    public String createBook(Model model, @ModelAttribute BookDto data) {
+    @GetMapping("/books/create")
+    public String showCreateBookPage(Model model){
+        model.addAttribute("bookDto", new BookDto());
+        return "createbook";
+    }
+
+    @PostMapping("/books/create")
+    public String createBook(Model model, @Valid @ModelAttribute("bookDto") BookDto data, BindingResult bindingResult) {
         log.info("Create book called by Thymeleaf.");
+
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(System.out::println);
+            return "createbook";
+        }
+
         if (data.getBookId() != null){
             throw new IllegalArgumentException();
         }
         BookDto book = bookMapper.toDto(bookService.createBook(data));
-        model.addAttribute("book", book);
-        return "bookcreate";
+        return "redirect:/?success=" + book.getTitle()+" has been created succesfully.";
     }
 
     @PostMapping("/markAsFavorite")
-    public String markBookAsFavorite(@ModelAttribute("favoriteDto") FavoriteDto favorite) {
+    public String markBookAsFavorite(@Valid @ModelAttribute("favoriteDto") FavoriteDto favorite) {
         log.info("Mark book {} as favorite for user {} called by Thymeleaf.", favorite.getBookId(), favorite.getUserId());
         String feedback = bookService.markBookAsFavorite(favorite.getUserId(),favorite.getBookId());
         return "redirect:/?success=" + feedback;
     }
+
 }

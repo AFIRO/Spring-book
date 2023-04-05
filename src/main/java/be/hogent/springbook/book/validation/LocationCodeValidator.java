@@ -18,12 +18,15 @@ public class LocationCodeValidator implements ConstraintValidator<LocationCode, 
             return false;
         }
 
-        for (LocationDto locationDto : locationDtos){
-            if (!(locationDto.getLocationCode1() - locationDto.getLocationCode2() >= 50)) {
+        for (LocationDto locationDto : locationDtos) {
+            if (locationDto.getLocationCode1() == 0 && locationDto.getLocationCode2() == 0 && locationDto.getLocationName().isEmpty()) {
+                continue;
+            }
+
+            if (!(locationDto.getLocationCode2() - locationDto.getLocationCode1() >= 50)){
                 return false;
             }
         }
-
         return true;
     }
 }

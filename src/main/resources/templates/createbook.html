@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Book</title>
+  <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
+</head>
+<body>
+<nav>
+    <p th:text="'Welcome, ' + ${#authentication.principal.username} + ' !'"></p>
+    <p th:text="'Your current role is: ' + ${#authentication.principal.getApplicationUser().getRole().toString()} + '.'"></p>
+    <ul>
+        <li><a th:href="@{/}">Books</a></li>
+        <li><a th:href="@{/books/favorites}">Favorites</a></li>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+  <h1>Create Book</h1>
+  <form method="post" th:object="${bookDto}" th:action="@{/books/create}">
+    <div class="form-group" th:classappend="${#fields.hasErrors('title')} ? 'has-error'">
+      <label for="title">Title:</label>
+      <input type="text" class="form-control" id="title" th:field="*{title}" required minlength="1">
+      <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('title')}" th:text="${err}"></p>
+    </div>
+    <div class="form-group"th:classappend="${#fields.hasErrors('price')} ? 'has-error'">
+      <label for="price">Price:</label>
+      <input type="number" class="form-control" id="price" th:field="*{price}" min="0.01" max="99.99" step="0.01">
+      <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('price')}" th:text="${err}"></p>
+    </div>
+    <div class="form-group" th:classappend="${#fields.hasErrors('isbn')} ? 'has-error'">
+      <label for="isbn">ISBN:</label>
+      <input type="text" class="form-control" id="isbn" th:field="*{isbn}" required>
+      <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('isbn')}" th:text="${err}"></p>
+    </div>
+<br>
+    <div class="form-group" th:classappend="${#fields.hasErrors('authors[0].name')} ? 'has-error'">
+      <label for="author1">Author 1:</label>
+      <input type="text" class="form-control" id="author1" th:field="*{authors[0].name}" required>
+      <div th:if="${#fields.hasErrors('authors[0].name')}" th:errors="*{authors[0].name}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('authors[0].name')}" th:text="${err}"></p>
+    </div>
+
+    <div class="form-group"th:classappend="${#fields.hasErrors('authors[1].name')} ? 'has-error'">
+      <label for="author2">Author 2:</label>
+      <input type="text" class="form-control" id="author2" th:field="*{authors[1].name}">
+      <div th:if="${#fields.hasErrors('authors[1].name')}" th:errors="*{authors[1].name}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('authors[1].name')}" th:text="${err}"></p>
+    </div>
+
+    <div class="form-group"th:classappend="${#fields.hasErrors('authors[2].name')} ? 'has-error'">
+      <label for="author3">Author 3:</label>
+      <input type="text" class="form-control" id="author3" th:field="*{authors[2].name}">
+      <div th:if="${#fields.hasErrors('authors[2].name')}" th:errors="*{authors[2].name}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('authors[2].name')}" th:text="${err}"></p>
+    </div>
+<br>
+    <div class="form-group"th:classappend="${#fields.hasErrors('locations[0]')} ? 'has-error'">
+      <label>Location 1:</label>
+      <br>
+      <label for="lc11">Location Code 1:</label>
+      <input type="text" class="form-control" id="lc11" th:field="*{locations[0].locationCode1}" required>
+      <div th:if="${#fields.hasErrors('locations[0].locationCode1')}" th:errors="*{locations[0].locationCode1}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('locations[0].locationCode1')}" th:text="${err}"></p>
+      <label for="lc12">Location Code 2:</label>
+      <input type="text" class="form-control" id="lc12" th:field="*{locations[0].locationCode2}" required>
+      <div th:if="${#fields.hasErrors('locations[0].locationCode2')}" th:errors="*{locations[0].locationCode2}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('locations[0].locationCode2')}" th:text="${err}"></p>
+      <label for="ln1">Location Name:</label>
+      <input type="text" class="form-control" id="ln1" th:field="*{locations[0].locationName}" required>
+      <div th:if="${#fields.hasErrors('locations[0].locationName')}" th:errors="*{locations[0].locationName}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('locations[0].locationName')}" th:text="${err}"></p>
+    </div>
+
+    <br>
+    <div class="form-group" th:classappend="${#fields.hasErrors('locations[1]')} ? 'has-error'">
+      <label>Location 2:</label>
+      <br>
+      <label for="lc21">Location Code 1:</label>
+      <input type="text" class="form-control" id="lc21" th:field="*{locations[1].locationCode1}">
+      <div th:if="${#fields.hasErrors('locations[1].locationCode1')}" th:errors="*{locations[1].locationCode1}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('locations[1].locationCode1')}" th:text="${err}"></p>
+      <label for="lc22">Location Code 2:</label>
+      <input type="text" class="form-control" id="lc22" th:field="*{locations[1].locationCode2}">
+      <div th:if="${#fields.hasErrors('locations[1].locationCode2')}" th:errors="*{locations[1].locationCode2}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('locations[1].locationCode2')}" th:text="${err}"></p>
+      <label for="ln2">Location Name:</label>
+      <input type="text" class="form-control" id="ln2" th:field="*{locations[1].locationName}">
+      <div th:if="${#fields.hasErrors('locations[1].locationName')}" th:errors="*{locations[1].locationName}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('locations[1].locationName')}" th:text="${err}"></p>
+    </div>
+
+    <br>
+    <div class="form-group" th:classappend="${#fields.hasErrors('locations[2]')} ? 'has-error'">
+      <label>Location 3:</label>
+      <br>
+      <label for="lc31">Location Code 1:</label>
+      <input type="text" class="form-control" id="lc31" th:field="*{locations[2].locationCode1}">
+      <div th:if="${#fields.hasErrors('locations[2].locationCode1')}" th:errors="*{locations[2].locationCode1}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('locations[2].locationCode1')}" th:text="${err}"></p>
+      <label for="lc32">Location Code 2:</label>
+      <input type="text" class="form-control" id="lc32" th:field="*{locations[2].locationCode2}">
+      <div th:if="${#fields.hasErrors('locations[2].locationCode2')}" th:errors="*{locations[2].locationCode2}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('locations[2].locationCode2')}" th:text="${err}"></p>
+      <label for="ln3">Location Name:</label>
+      <input type="text" class="form-control" id="ln3" th:field="*{locations[2].locationName}">
+      <div th:if="${#fields.hasErrors('locations[2].locationName')}" th:errors="*{locations[2].locationName}" class="invalid-feedback"></div>
+        <p class="help-block" th:each="err : ${#fields.errors('locations[2].locationName')}" th:text="${err}"></p>
+    </div>
+<br>
+    <button type="submit" class="btn btn-primary">Create Book</button>
+  </form>
+</div>
+</body>
+</html>

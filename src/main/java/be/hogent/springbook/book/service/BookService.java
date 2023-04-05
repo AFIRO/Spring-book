@@ -2,6 +2,7 @@ package be.hogent.springbook.book.service;
 
 import be.hogent.springbook.book.entity.Author;
 import be.hogent.springbook.book.entity.Book;
+import be.hogent.springbook.book.entity.Location;
 import be.hogent.springbook.book.entity.dto.BookDto;
 import be.hogent.springbook.book.mapper.BookMapper;
 import be.hogent.springbook.book.repository.AuthorRepository;
@@ -62,6 +63,8 @@ public class BookService {
 
     public Book createBook(BookDto data){
         Book newBook = bookMapper.toEntity(data);
+
+        filterDummyData(newBook);
         newBook.setNumberOfTimesFavorited(0);
         return bookRepository.save(newBook);
     }
@@ -110,5 +113,11 @@ public class BookService {
         SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
         return feedbackMessage;
     }
+
+    private static void filterDummyData(Book newBook) {
+        newBook.setAuthors(newBook.getAuthors().stream().filter(author -> !author.getName().isEmpty()).toList());
+        newBook.setLocations(newBook.getLocations().stream().filter(location -> !(location.getLocationCode1() == 0 && location.getLocationCode2() == 0 && location.getLocationName().isEmpty())).toList());
+    }
+
 }
 

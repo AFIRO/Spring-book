@@ -1,39 +1,38 @@
 package be.hogent.springbook.book.entity.dto;
 
-import be.hogent.springbook.book.entity.Author;
-import be.hogent.springbook.book.entity.Location;
+
 import be.hogent.springbook.book.validation.ISBNChecksum;
 import be.hogent.springbook.book.validation.ISBNFormat;
 import be.hogent.springbook.book.validation.LocationCode;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.ISBN;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookDto {
     private String bookId;
     @NotNull
     @NotBlank
     private String title;
-    @NotNull
-    @NotEmpty
-    @Size(max = 3)
+    @NotNull(message = "At least one author is required")
+    @Size(min = 1, max = 3, message = "You can have a maximum of 3 authors")
     private List<AuthorDto> authors;
     @ISBNChecksum
     @ISBNFormat
     private String isbn;
-    @Positive
-    @Max(100)
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.01", message = "Price must be higher than 0")
+    @DecimalMax(value = "99.99", message = "Price must be lower than 100")
     private double price;
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "At least one location is required")
+    @Size(min = 1, max = 3, message = "You can have a maximum of 3 locations")
     @LocationCode
     private List<LocationDto> locations;
     @NotNull
