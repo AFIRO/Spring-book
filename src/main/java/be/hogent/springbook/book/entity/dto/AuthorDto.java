@@ -14,6 +14,5 @@ import lombok.NoArgsConstructor;
 public class AuthorDto {
     private String authorId;
     @NotNull
-    @NotBlank
     private String name;
 }

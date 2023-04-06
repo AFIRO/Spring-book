@@ -116,7 +116,7 @@ public class BookService {
 
     private static void filterDummyData(Book newBook) {
         newBook.setAuthors(newBook.getAuthors().stream().filter(author -> !author.getName().isEmpty()).toList());
-        newBook.setLocations(newBook.getLocations().stream().filter(location -> !(location.getLocationCode1() == null && location.getLocationCode2() == null && location.getLocationName().isEmpty())).toList());
+        newBook.setLocations(newBook.getLocations().stream().filter(location -> !(location.getLocationCode1() == null || location.getLocationCode2() == null && location.getLocationName().isEmpty())).toList());
     }
 
     public void deleteBook(String id) {
