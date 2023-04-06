@@ -7,10 +7,19 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = LocationCodeValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target( { ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LocationCode{
-    String message() default "Invalid Location format";
+    String message() default "Location code 2 must be 50 spaces from location code 1.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
+    String locationCode1();
+    String locationCode2();
+    String locationName();
+
+    @Target({ ElementType.TYPE })
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface List {
+        LocationCode[] value();
+    }
 }

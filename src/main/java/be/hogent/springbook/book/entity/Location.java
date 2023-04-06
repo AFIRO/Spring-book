@@ -17,7 +17,7 @@ public class Location {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String locationId;
-    private int locationCode1;
-    private int locationCode2;
+    private Integer locationCode1;
+    private Integer locationCode2;
     private String locationName;
 }
