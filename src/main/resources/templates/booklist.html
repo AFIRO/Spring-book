@@ -13,12 +13,12 @@
 
 <body>
 <nav>
-    <p th:text="'Welcome, ' + ${#authentication.principal.username} + ' !'"></p>
-    <p th:text="'Your current role is: ' + ${#authentication.principal.getApplicationUser().getRole().toString()} + '.'"></p>
+    <p th:text="#{welcome} + ',' + ${#authentication.principal.username} + ' !'"></p>
+    <p th:text="#{current.role}  + ${#authentication.principal.getApplicationUser().getRole().toString()} + '.'"></p>
     <ul>
-        <li><a th:href="@{/}">Books</a></li>
-        <li><a th:href="@{/books/favorites}">Favorites</a></li>
-        <li><a th:href="@{/logout}">Logout</a></li>
+        <li><a th:href="@{/}" th:text="#{books}"></a></li>
+        <li><a th:href="@{/books/favorites}" th:text="#{favorites}"></a></li>
+        <li><a th:href="@{/logout}" th:text="#{logout}"></a></li>
     </ul>
 </nav>
 
@@ -29,18 +29,18 @@
 </div>
 <h1>Book List</h1>
 
-<a th:if="${#authentication.principal.isAdmin()}" th:href="@{/books/create}" class="btn btn-primary">Create New Book</a>
+<a th:if="${#authentication.principal.isAdmin()}" th:href="@{/books/create}" class="btn btn-primary" th:text="#{create.book}"></a>
 <br>
 <br>
 <table>
     <thead>
     <tr>
-        <th>Title</th>
-        <th>Authors</th>
-        <th>ISBN</th>
-        <th>Times Favorited</th>
-        <th>Price</th>
-        <th>Location</th>
+        <th th:text="#{title}"></th>
+        <th th:text="#{authors}"></th>
+        <th th:text="#{isbn}"></th>
+        <th th:text="#{favorited}"></th>
+        <th th:text="#{price}"></th>
+        <th th:text="#{location}"></th>
     </tr>
     </thead>
     <tbody>
