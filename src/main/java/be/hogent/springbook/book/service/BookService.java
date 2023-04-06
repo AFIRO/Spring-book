@@ -2,7 +2,6 @@ package be.hogent.springbook.book.service;
 
 import be.hogent.springbook.book.entity.Author;
 import be.hogent.springbook.book.entity.Book;
-import be.hogent.springbook.book.entity.Location;
 import be.hogent.springbook.book.entity.dto.BookDto;
 import be.hogent.springbook.book.mapper.BookMapper;
 import be.hogent.springbook.book.repository.AuthorRepository;
@@ -12,6 +11,8 @@ import be.hogent.springbook.user.entity.ApplicationUser;
 import be.hogent.springbook.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,11 +23,12 @@ import java.util.List;
 @Log4j2
 @RequiredArgsConstructor
 public class BookService {
-    public static final String USER_NOT_FOUND = "User not found";
+
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final UserRepository userRepository;
     private final BookMapper bookMapper;
+    private final MessageSource messageSource;
 
     public List<Book> getAll(){
         log.info("Get All Books called in Service");
@@ -37,7 +39,7 @@ public class BookService {
         log.info("Get By Id for {} Books called in Service", id);
         return bookRepository.findById(id).orElseThrow(()->{
             log.error("Book {} not found", id);
-            throw new IllegalArgumentException();
+            return new IllegalArgumentException(messageSource.getMessage("book.not.found", null, LocaleContextHolder.getLocale()));
         });
     }
 
@@ -45,7 +47,7 @@ public class BookService {
         log.info("Get By ISBN for {} Books called in Service", isbn);
         return bookRepository.findByIsbn(isbn).orElseThrow(()->{
             log.error("Book {} not found", isbn);
-            throw new IllegalArgumentException();
+            return new IllegalArgumentException(messageSource.getMessage("book.not.found", null, LocaleContextHolder.getLocale()));
         });
     }
 
@@ -55,7 +57,7 @@ public class BookService {
         Author potentialAuthor = authorRepository.findAuthorByName(name)
                 .orElseThrow(()-> {
                     log.error("Author with name {} not found", name);
-                    throw new IllegalArgumentException();
+                    return new IllegalArgumentException(messageSource.getMessage("author.not.found", null, LocaleContextHolder.getLocale()));
                 });
 
         return bookRepository.findAllByAuthorsContaining(potentialAuthor);
@@ -87,7 +89,7 @@ public class BookService {
         ApplicationUser potentialApplicationUser = userRepository.findById(userId)
                 .orElseThrow(() -> {
                     log.error("user {} not found in database.", userId);
-                    return new IllegalArgumentException(USER_NOT_FOUND);
+                    return new IllegalArgumentException(messageSource.getMessage("user.not.found",null, LocaleContextHolder.getLocale()));
                 });
 
         Book potentialBook = this.getById(bookId);
@@ -97,13 +99,13 @@ public class BookService {
             potentialApplicationUser.getFavoriteBooks().add(potentialBook);
             potentialBook.setNumberOfTimesFavorited(potentialBook.getNumberOfTimesFavorited()+1);
             userRepository.save(potentialApplicationUser);
-            feedbackMessage = "Book " + potentialBook.getTitle() + " has been favorited succesfully!";
+            feedbackMessage = messageSource.getMessage("book",null, LocaleContextHolder.getLocale()) + potentialBook.getTitle() + messageSource.getMessage("been.favorited",null, LocaleContextHolder.getLocale());
         } else {
             log.info("Removing book from favorites.");
             potentialApplicationUser.getFavoriteBooks().remove(potentialBook);
             potentialBook.setNumberOfTimesFavorited(potentialBook.getNumberOfTimesFavorited()-1);
             userRepository.save(potentialApplicationUser);
-            feedbackMessage = "Book " + potentialBook.getTitle() + " has been unfavorited succesfully!";
+            feedbackMessage = messageSource.getMessage("book",null, LocaleContextHolder.getLocale()) + messageSource.getMessage("been.unfavorited",null, LocaleContextHolder.getLocale());
         }
         //refresh spring security user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -1,6 +1,5 @@
 package be.hogent.springbook.book.entity.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthorDto {
     private String authorId;
-    @NotNull
+    @NotNull(message = "{author.name.required}" )
     private String name;
 }

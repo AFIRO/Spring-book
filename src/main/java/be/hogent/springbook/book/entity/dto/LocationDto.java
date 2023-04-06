@@ -13,12 +13,12 @@ import lombok.*;
 @LocationCode(locationCode1 = "locationCode1", locationCode2 = "locationCode2", locationName = "locationName")
 public class LocationDto {
     private String locationId;
-    @Min(50)
-    @Max(300)
+    @Min(value = 50, message = "{location.code.too.low}")
+    @Max(value = 300, message = "{location.code.too.high}")
     private Integer locationCode1;
-    @Min(50)
-    @Max(300)
+    @Min(value = 50, message = "{location.code.too.low}")
+    @Max(value = 300,message = "{location.code.too.high}")
     private Integer locationCode2;
-    @Pattern(regexp = "^[A-Za-z]+$",message = "You may only pass letters.")
+    @Pattern(regexp = "^[A-Za-z]+$",message = "{location.name.letters}")
     private String locationName;
 }

@@ -19,18 +19,18 @@ public class BookDto {
     @NotNull
     @NotBlank
     private String title;
-    @NotNull(message = "At least one author is required")
-    @Size(min = 1, max = 3, message = "You can have a maximum of 3 authors")
+    @NotNull(message = "{author.required}")
+    @Size(min = 1, max = 3, message = "{max.three.author}")
     @Valid
     private List<AuthorDto> authors;
     @ISBNChecksum
     @ISBNFormat
     private String isbn;
-    @DecimalMin(value = "0.01", message = "Price must be higher than 0")
-    @DecimalMax(value = "99.99", message = "Price must be lower than 100")
+    @DecimalMin(value = "0.01", message = "{price.too.low}")
+    @DecimalMax(value = "99.99", message = "{price.too.high}")
     private double price;
-    @NotNull(message = "At least one location is required")
-    @Size(min = 1, max = 3, message = "You can have a maximum of 3 locations")
+    @NotNull(message = "{location.required}")
+    @Size(min = 1, max = 3, message = "{max.three.location}")
     @Valid
     private List<LocationDto> locations;
     @NotNull
