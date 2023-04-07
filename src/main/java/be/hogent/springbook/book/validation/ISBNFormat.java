@@ -7,10 +7,12 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = ISBNFormatValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ISBNFormat{
+public @interface ISBNFormat {
     String message() default "Invalid ISBN format";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

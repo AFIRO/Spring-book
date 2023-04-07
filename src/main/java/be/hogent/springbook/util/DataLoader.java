@@ -21,25 +21,25 @@ public class DataLoader {
     private final BookRepository bookRepository;
 
     @PostConstruct
-    private void loadData(){
+    private void loadData() {
         seedApplicationUsers();
         seedBooks();
         printDB();
-
     }
 
     private void printDB() {
-        for (Object object : userRepository.findAll()){
+        for (Object object : userRepository.findAll()) {
             System.out.println(object);
         }
 
-        for (Object object : bookRepository.findAll()){
+        for (Object object : bookRepository.findAll()) {
             System.out.println(object);
         }
     }
 
     private void seedApplicationUsers() {
         //seed application users
+
         ApplicationUser admin = ApplicationUser.builder()
                 .email("admin")
                 .password("$2a$12$Mwbsu7NxN6jCDSmaHahk2eUT0Yhdcg02LZVdQa9tG9josq.rthVr.")
@@ -61,44 +61,49 @@ public class DataLoader {
 
 
         Book book1 = Book.builder()
-                .authors(List.of(Author.builder().name("Jacques Firenze").build(),
+                .authors(List.of(Author.builder().name("Dikke Sven").build(),
                         Author.builder().name("Quinte Ridz").build()))
-                .isbn("978-0-13-468599-1")
+                .isbn("9780134685991")
                 .locations(List.of(
-                        Location.builder().locationName("LOC").locationCode1(200).locationCode2(50).build(),
-                        Location.builder().locationName("LOD").locationCode1(200).locationCode2(50).build(),
-                        Location.builder().locationName("LOA").locationCode1(200).locationCode2(50).build()))
+                        Location.builder().locationName("BERGING").locationCode1(40).locationCode2(90).build(),
+                        Location.builder().locationName("WC").locationCode1(50).locationCode2(200).build(),
+                        Location.builder().locationName("SCHUURTJE").locationCode1(60).locationCode2(120).build()))
                 .numberOfTimesFavorited(4)
-                .price(99.9)
-                .title("Uw Moeder")
+                .price(5.56)
+                .title("Belgische Rapcultuur: Een overzicht")
                 .build();
 
         Book book2 = Book.builder()
-                .authors(List.of(Author.builder().name("Jacques Firenze").build()))
-                .isbn("978-1-23-456789-7")
+                .authors(List.of(Author.builder().name("Robin Van Limbergen").build()))
+                .isbn("9781234567897")
                 .locations(List.of(
-                        Location.builder().locationName("LOC").locationCode1(200).locationCode2(50).build(),
-                        Location.builder().locationName("LOD").locationCode1(200).locationCode2(50).build(),
-                        Location.builder().locationName("LOA").locationCode1(200).locationCode2(50).build()))
-                .numberOfTimesFavorited(2)
-                .price(99.9)
-                .title("Is een")
+                        Location.builder().locationName("VERBODEN").locationCode1(69).locationCode2(300).build()))
+                .numberOfTimesFavorited(69)
+                .price(29.99)
+                .title("Het Leven Zoals Het Is: Boosaardige Clown")
                 .build();
 
         Book book3 = Book.builder()
-                .authors(List.of(Author.builder().name("Jean-Pierre Van Rossem").build()))
-                .isbn("978-9-05-759315-4")
+                .authors(List.of(Author.builder().name("Tasja Collier").build()))
+                .isbn("9789057593154")
                 .locations(List.of(
-                        Location.builder().locationName("LOC").locationCode1(200).locationCode2(50).build(),
-                        Location.builder().locationName("LOD").locationCode1(200).locationCode2(50).build(),
-                        Location.builder().locationName("LOA").locationCode1(200).locationCode2(50).build()))
+                        Location.builder().locationName("WETENSCHAP").locationCode1(70).locationCode2(300).build()))
                 .numberOfTimesFavorited(35)
-                .price(99.9)
-                .title("Hoer")
+                .price(39.99)
+                .title("De Liquiditeitsgraad van de Inhoud van mijn Glas")
                 .build();
 
-        bookRepository.saveAll(List.of(book1, book2, book3));
+        Book book4 = Book.builder()
+                .authors(List.of(Author.builder().name("Jordan De Deken").build()))
+                .isbn("9780747532743")
+                .locations(List.of(
+                        Location.builder().locationName("FILM").locationCode1(70).locationCode2(300).build()))
+                .numberOfTimesFavorited(35)
+                .price(99.99)
+                .title("Oldborne: een Allegory van Trumpiaanse Politiek")
+                .build();
+
+
+        bookRepository.saveAll(List.of(book1, book2, book3, book4));
     }
-
-
 }

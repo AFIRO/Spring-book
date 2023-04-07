@@ -7,8 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+
 @Repository
-public interface BookRepository extends JpaRepository<Book,String> {
+public interface BookRepository extends JpaRepository<Book, String> {
     Optional<Book> findByIsbn(String ISBN);
+
     List<Book> findAllByAuthorsContaining(Author author);
+
+    boolean existsByIsbn(String isbn);
 }

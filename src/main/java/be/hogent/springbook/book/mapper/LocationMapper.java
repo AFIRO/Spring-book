@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LocationMapper {
-    public LocationDto toDto(Location data){
+    public LocationDto toDto(Location data) {
         return LocationDto.builder()
                 .locationId(data.getLocationId())
                 .locationCode1(data.getLocationCode1())
@@ -15,7 +15,7 @@ public class LocationMapper {
                 .build();
     }
 
-    public Location toEntity(LocationDto data){
+    public Location toEntity(LocationDto data) {
         return Location.builder()
                 .locationId(data.getLocationId())
                 .locationCode1(data.getLocationCode1())

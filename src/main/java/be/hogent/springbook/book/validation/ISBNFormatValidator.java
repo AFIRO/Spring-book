@@ -3,7 +3,7 @@ package be.hogent.springbook.book.validation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class ISBNFormatValidator implements ConstraintValidator<ISBNFormat,String> {
+public class ISBNFormatValidator implements ConstraintValidator<ISBNFormat, String> {
     @Override
     public void initialize(ISBNFormat constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);

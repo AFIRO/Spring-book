@@ -6,6 +6,7 @@ import be.hogent.springbook.user.entity.dto.ApplicationUserDto;
 import be.hogent.springbook.user.entity.dto.RegisterDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
 @Component
 @AllArgsConstructor
 public class ApplicationUserMapper {

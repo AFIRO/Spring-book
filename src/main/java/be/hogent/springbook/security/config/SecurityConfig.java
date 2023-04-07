@@ -23,9 +23,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf-> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .authorizeHttpRequests(auth ->
                         auth.anyRequest().authenticated())
+                .httpBasic(withDefaults())
                 .formLogin(withDefaults())
                 .logout(logout->
                         logout.logoutUrl("/logout")

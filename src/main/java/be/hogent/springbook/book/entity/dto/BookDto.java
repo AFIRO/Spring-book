@@ -5,9 +5,12 @@ import be.hogent.springbook.book.validation.ISBNChecksum;
 import be.hogent.springbook.book.validation.ISBNFormat;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -36,12 +39,12 @@ public class BookDto {
     @NotNull
     private int numberOfTimesFavorited;
 
-    public static BookDto  generateDefault(){
+    public static BookDto generateDefault() {
         return BookDto.builder()
                 .bookId(null)
                 .isbn(null)
-                .authors(new ArrayList<>())
-                .locations(new ArrayList<>())
+                .authors(Arrays.asList(AuthorDto.builder().name(" ").build(), AuthorDto.builder().name(" ").build(), AuthorDto.builder().name(" ").build()))
+                .locations(Arrays.asList(LocationDto.builder().locationName(" ").build(), LocationDto.builder().locationName(" ").build(), LocationDto.builder().locationName(" ").build()))
                 .numberOfTimesFavorited(0)
                 .price(0.01)
                 .build();

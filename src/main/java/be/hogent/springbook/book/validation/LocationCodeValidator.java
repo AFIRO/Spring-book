@@ -10,6 +10,7 @@ public class LocationCodeValidator implements ConstraintValidator<LocationCode, 
     private String locationCode1;
     private String locationCode2;
     private String locationName;
+
     @Override
     public void initialize(LocationCode constraintAnnotation) {
         this.locationCode1 = constraintAnnotation.locationCode1();
@@ -21,18 +22,16 @@ public class LocationCodeValidator implements ConstraintValidator<LocationCode, 
     @Override
     public boolean isValid(LocationDto locationDto, ConstraintValidatorContext constraintValidatorContext) {
 
-        if (BeanUtils.getProperty(locationDto, locationCode1) == null && BeanUtils.getProperty(locationDto, locationCode2) == null && BeanUtils.getProperty(locationDto, locationName).isEmpty()){
+        if (BeanUtils.getProperty(locationDto, locationCode1) == null && BeanUtils.getProperty(locationDto, locationCode2) == null && BeanUtils.getProperty(locationDto, locationName).isEmpty()) {
             return true;
         }
 
-        if (BeanUtils.getProperty(locationDto, locationCode1) != null && BeanUtils.getProperty(locationDto, locationCode2) != null){
+        if (BeanUtils.getProperty(locationDto, locationCode1) != null && BeanUtils.getProperty(locationDto, locationCode2) != null) {
             Integer locationCodeValue1 = Integer.parseInt(BeanUtils.getProperty(locationDto, locationCode1));
             Integer locationCodeValue2 = Integer.parseInt(BeanUtils.getProperty(locationDto, locationCode2));
 
             return locationCodeValue2 - locationCodeValue1 >= 50;
-        }
-
-       else
-           return true;
+        } else
+            return true;
     }
 }

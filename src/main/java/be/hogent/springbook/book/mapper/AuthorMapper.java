@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorMapper {
-    public AuthorDto toDto(Author data){
+    public AuthorDto toDto(Author data) {
         return AuthorDto.builder()
                 .authorId(data.getAuthorId())
                 .name(data.getName())
                 .build();
     }
 
-    public Author toEntity(AuthorDto data){
+    public Author toEntity(AuthorDto data) {
         return Author.builder()
                 .authorId(data.getAuthorId())
                 .name(data.getName())

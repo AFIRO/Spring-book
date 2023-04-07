@@ -2,7 +2,6 @@ package be.hogent.springbook.book.mapper;
 
 import be.hogent.springbook.book.entity.Book;
 import be.hogent.springbook.book.entity.dto.BookDto;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,7 @@ public class BookMapper {
     private final LocationMapper locationMapper;
     private final AuthorMapper authorMapper;
 
-    public BookDto toDto(Book data){
+    public BookDto toDto(Book data) {
         return BookDto.builder()
                 .bookId(data.getBookId())
                 .isbn(data.getIsbn())
@@ -24,7 +23,7 @@ public class BookMapper {
                 .build();
     }
 
-    public Book toEntity(BookDto data){
+    public Book toEntity(BookDto data) {
         return Book.builder()
                 .bookId(data.getBookId())
                 .isbn(data.getIsbn().trim().replaceAll("[^0-9]", ""))

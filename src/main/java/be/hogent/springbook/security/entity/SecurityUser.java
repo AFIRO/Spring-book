@@ -60,15 +60,19 @@ public class SecurityUser implements UserDetails {
         return true;
     }
 
-    public boolean isAdmin() {return applicationUser.getRole().equals(UserRole.ADMIN);}
+    public boolean isAdmin() {
+        return applicationUser.getRole().equals(UserRole.ADMIN);
+    }
 
-    public String getUserId() {return applicationUser.getUserId();}
+    public String getUserId() {
+        return applicationUser.getUserId();
+    }
 
-    public List<String> getFavoriteBookIds(){
+    public List<String> getFavoriteBookIds() {
         return this.favoriteBookIds;
     }
 
-    public void setFavoriteBookIds(List<String> ids){
+    public void setFavoriteBookIds(List<String> ids) {
         this.favoriteBookIds = ids;
     }
 

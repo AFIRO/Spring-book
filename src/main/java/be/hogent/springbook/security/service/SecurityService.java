@@ -15,11 +15,12 @@ import org.springframework.stereotype.Service;
 @Log4j2
 public class SecurityService implements UserDetailsService {
     private final UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        ApplicationUser potentialUser = userRepository.findByEmail(email).orElseThrow( ()-> {
+        ApplicationUser potentialUser = userRepository.findByEmail(email).orElseThrow(() -> {
             log.error("User with email {} not found", email);
-            throw new UsernameNotFoundException("User Not Found");
+            return new UsernameNotFoundException("User Not Found");
         });
 
         return new SecurityUser(potentialUser);

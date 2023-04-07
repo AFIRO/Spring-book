@@ -1,5 +1,9 @@
 package be.hogent.springbook.user.entity;
 
+import lombok.experimental.FieldNameConstants;
+
+@FieldNameConstants(onlyExplicitlyIncluded = true)
 public enum UserRole {
-    ADMIN, USER
+    @FieldNameConstants.Include ADMIN,
+    @FieldNameConstants.Include USER
 }

@@ -1,4 +1,4 @@
-package be.hogent.springbook.user.config;
+package be.hogent.springbook.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

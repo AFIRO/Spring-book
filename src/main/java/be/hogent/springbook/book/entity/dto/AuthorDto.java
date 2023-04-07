@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthorDto {
     private String authorId;
-    @NotNull(message = "{author.name.required}" )
+    @NotNull(message = "{author.name.required}")
     private String name;
 }
