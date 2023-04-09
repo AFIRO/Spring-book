@@ -37,5 +37,5 @@ class LocationMapperTest {
         assertThat(actual.getLocationCode1()).isEqualTo(expected.getLocationCode1());
         assertThat(actual.getLocationCode2()).isEqualTo(expected.getLocationCode2());
         assertThat(actual.getLocationName()).isEqualTo(expected.getLocationName());
-}
     }
+}

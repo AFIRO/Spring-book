@@ -23,7 +23,7 @@ class BookMapperTest {
     private BookMapper bookMapper;
 
     @Test
-    void toDto(){
+    void toDto() {
         Book startData = getBook();
         BookDto expected = getBookDto();
         when(authorMapper.toDto(startData.getAuthors().get(0))).thenReturn(expected.getAuthors().get(0));
@@ -36,12 +36,12 @@ class BookMapperTest {
         assertThat(actual.getNumberOfTimesFavorited()).isEqualTo(expected.getNumberOfTimesFavorited());
         assertThat(actual.getLocations()).isEqualTo(expected.getLocations());
         assertThat(actual.getAuthors()).isEqualTo(expected.getAuthors());
-        verify(authorMapper,times(1)).toDto(startData.getAuthors().get(0));
-        verify(locationMapper,times(1)).toDto(startData.getLocations().get(0));
+        verify(authorMapper, times(1)).toDto(startData.getAuthors().get(0));
+        verify(locationMapper, times(1)).toDto(startData.getLocations().get(0));
     }
 
     @Test
-    void toEntity(){
+    void toEntity() {
         BookDto startData = getBookDto();
         Book expected = getBook();
         when(authorMapper.toEntity(startData.getAuthors().get(0))).thenReturn(expected.getAuthors().get(0));
@@ -54,8 +54,8 @@ class BookMapperTest {
         assertThat(actual.getNumberOfTimesFavorited()).isEqualTo(expected.getNumberOfTimesFavorited());
         assertThat(actual.getLocations()).isEqualTo(expected.getLocations());
         assertThat(actual.getAuthors()).isEqualTo(expected.getAuthors());
-        verify(authorMapper,times(1)).toEntity(startData.getAuthors().get(0));
-        verify(locationMapper,times(1)).toEntity(startData.getLocations().get(0));
+        verify(authorMapper, times(1)).toEntity(startData.getAuthors().get(0));
+        verify(locationMapper, times(1)).toEntity(startData.getLocations().get(0));
 
     }
 

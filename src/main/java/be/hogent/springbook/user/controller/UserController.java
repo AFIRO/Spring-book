@@ -48,7 +48,7 @@ public class UserController {
 
     @PostMapping()
     @Secured(UserRole.Fields.ADMIN)
-    public ResponseEntity<ApplicationUserDto> createUser(@Valid RegisterDto data) {
+    public ResponseEntity<ApplicationUserDto> createUser(@Valid @RequestBody RegisterDto data) {
         log.info("Create for new user {} called from Controller.", data.getEmail());
         try {
             return ResponseEntity.ok()
@@ -59,7 +59,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping  ("/{id}")
     @Secured(UserRole.Fields.ADMIN)
     public ResponseEntity<ApplicationUserDto> deleteUser(@PathVariable("id") String id) {
         log.info("Delete for user with id {} called from Controller.", id);

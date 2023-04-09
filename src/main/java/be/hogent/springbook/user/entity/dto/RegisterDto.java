@@ -3,6 +3,7 @@ package be.hogent.springbook.user.entity.dto;
 import be.hogent.springbook.user.entity.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,6 +16,6 @@ public class RegisterDto {
     private String email;
     @NotBlank(message = "Password is required")
     private String password;
-    @NotBlank(message = "Role is required")
+    @NotNull
     private UserRole role;
 }

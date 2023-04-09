@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BookRestController.class)
 @AutoConfigureMockMvc
@@ -47,10 +47,11 @@ class BookRestControllerTest {
         MvcResult result = mockMvc.perform(get("/api/books").with(user(getAdminUser())))
                 .andExpect(status().isOk())
                 .andReturn();
-        List<BookDto> actual = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+        List<BookDto> actual = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+        });
 
         assertThat(actual.get(0)).isEqualTo(bookDtos.get(0));
-        verify(bookService,times(1)).getAll();
+        verify(bookService, times(1)).getAll();
     }
 
     @Test
@@ -63,10 +64,11 @@ class BookRestControllerTest {
         MvcResult result = mockMvc.perform(get("/api/books/author/" + books.get(0).getAuthors().get(0).getName()).with(user(getAdminUser())))
                 .andExpect(status().isOk())
                 .andReturn();
-        List<BookDto> actual = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+        List<BookDto> actual = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+        });
 
         assertThat(actual.get(0)).isEqualTo(bookDtos.get(0));
-        verify(bookService,times(1)).getAllByAuthor(books.get(0).getAuthors().get(0).getName());
+        verify(bookService, times(1)).getAllByAuthor(books.get(0).getAuthors().get(0).getName());
     }
 
     @Test
@@ -76,13 +78,14 @@ class BookRestControllerTest {
         BookDto expected = getBookDto();
         when(bookService.getByIsbn(startData.getIsbn())).thenReturn(startData);
         when(bookMapper.toDto(startData)).thenReturn(expected);
-        MvcResult result = mockMvc.perform(get("/api/books/isbn/"+startData.getIsbn()).with(user(getAdminUser())))
+        MvcResult result = mockMvc.perform(get("/api/books/isbn/" + startData.getIsbn()).with(user(getAdminUser())))
                 .andExpect(status().isOk())
                 .andReturn();
-        BookDto actual = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+        BookDto actual = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+        });
 
         assertThat(actual).isEqualTo(expected);
-        verify(bookService,times(1)).getByIsbn(startData.getIsbn());
+        verify(bookService, times(1)).getByIsbn(startData.getIsbn());
     }
 
 

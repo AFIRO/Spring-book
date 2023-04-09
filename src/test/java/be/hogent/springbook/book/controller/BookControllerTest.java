@@ -67,7 +67,7 @@ class BookControllerTest {
         BookDto bookDto = getBookDto();
         when(bookService.getById(book.getBookId())).thenReturn(book);
         when(bookMapper.toDto(book)).thenReturn(bookDto);
-        mockMvc.perform(get("/books/"+ book.getBookId()).with(user(getAdminUser())))
+        mockMvc.perform(get("/books/" + book.getBookId()).with(user(getAdminUser())))
                 .andExpect(status().isOk())
                 .andExpect(view().name("book"))
                 .andExpect(model().attribute("book", bookDto));
@@ -89,10 +89,10 @@ class BookControllerTest {
         when(bookMapper.toDto(any())).thenReturn(bookDto);
         mockMvc.perform(post("/books/create")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                        .param("isbn",bookDto.getIsbn())
-                        .param("title",bookDto.getTitle())
+                        .param("isbn", bookDto.getIsbn())
+                        .param("title", bookDto.getTitle())
                         .param("price", String.valueOf(bookDto.getPrice()))
-                        .param("numberOfTimesFavorited","0")
+                        .param("numberOfTimesFavorited", "0")
                         .param("authors[0].name", bookDto.getAuthors().get(0).getName())
                         .param("locations[0].locationCode1", String.valueOf(bookDto.getLocations().get(0).getLocationCode1()))
                         .param("locations[0].locationCode2", String.valueOf(bookDto.getLocations().get(0).getLocationCode2()))
@@ -100,7 +100,7 @@ class BookControllerTest {
                         .with(user(getAdminUser()))
                         .with(csrf()))
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/?success="+bookDto.getTitle()+" has been created succesfully."));
+                .andExpect(view().name("redirect:/?success=" + bookDto.getTitle() + " has been created succesfully."));
     }
 
     @Test
@@ -111,10 +111,10 @@ class BookControllerTest {
         when(bookMapper.toDto(any())).thenReturn(bookDto);
         mockMvc.perform(post("/books/create")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                        .param("isbn",bookDto.getIsbn())
-                        .param("title",bookDto.getTitle())
+                        .param("isbn", bookDto.getIsbn())
+                        .param("title", bookDto.getTitle())
                         .param("price", String.valueOf(bookDto.getPrice()))
-                        .param("numberOfTimesFavorited","0")
+                        .param("numberOfTimesFavorited", "0")
                         .with(user(getAdminUser()))
                         .with(csrf()))
                 .andExpect(status().isOk())
@@ -123,11 +123,11 @@ class BookControllerTest {
 
     @Test
     void markAsFavorite_happyFlow() throws Exception {
-        when(bookService.markBookAsFavorite(TEST_ID,TEST_ID)).thenReturn("Marked successfully");
+        when(bookService.markBookAsFavorite(TEST_ID, TEST_ID)).thenReturn("Marked successfully");
         mockMvc.perform(post("/markAsFavorite")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                        .param("userId",TEST_ID)
-                        .param("bookId",TEST_ID)
+                        .param("userId", TEST_ID)
+                        .param("bookId", TEST_ID)
                         .with(user(getAdminUser()))
                         .with(csrf()))
                 .andExpect(status().isFound())
@@ -142,7 +142,6 @@ class BookControllerTest {
                 .andExpect(status().isFound())
                 .andExpect(view().name("redirect:/?success=Book has been deleted succesfully."));
     }
-
 
 
     private SecurityUser getAdminUser() {

@@ -55,7 +55,7 @@ public class TestData {
                 .build();
     }
 
-    public static BookDto getBookDto(){
+    public static BookDto getBookDto() {
         return BookDto.builder().bookId(TEST_ID)
                 .price(TEST_PRICE)
                 .isbn(TEST_ISBN)
@@ -66,7 +66,7 @@ public class TestData {
                 .build();
     }
 
-    public static Book getBook(){
+    public static Book getBook() {
         return Book.builder().bookId(TEST_ID)
                 .price(TEST_PRICE)
                 .isbn(TEST_ISBN)
@@ -77,7 +77,7 @@ public class TestData {
                 .build();
     }
 
-    public static ApplicationUser getApplicationUser(){
+    public static ApplicationUser getApplicationUser() {
         return ApplicationUser.builder().userId(TEST_ID).favoriteBooks(new ArrayList<>()).role(UserRole.ADMIN).build();
     }
 }

@@ -7,6 +7,8 @@ import be.hogent.springbook.user.entity.dto.RegisterDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 @AllArgsConstructor
 public class ApplicationUserMapper {
@@ -18,6 +20,8 @@ public class ApplicationUserMapper {
                 .email(dto.getEmail())
                 .password(dto.getPassword())
                 .role(dto.getRole())
+                .maxNumberOfFavorites(3)
+                .favoriteBooks(new ArrayList<>())
                 .build();
     }
 
