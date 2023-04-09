@@ -18,6 +18,7 @@ public class TestData {
     public static final double TEST_PRICE = 69.69;
     public static final String TEST_ISBN = "TEST_ISBN";
     public static final String TEST_TITLE = "TEST_TITLE";
+    public static final String BOOK_NOT_FOUND = "Book not found.";
 
     public static Author getAuthor() {
         return Author.builder()
