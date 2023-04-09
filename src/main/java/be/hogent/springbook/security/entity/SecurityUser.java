@@ -13,14 +13,12 @@ import java.util.Collections;
 import java.util.List;
 
 @Data
-
 public class SecurityUser implements UserDetails {
     private ApplicationUser applicationUser;
     private List<String> favoriteBookIds;
 
     public SecurityUser(ApplicationUser applicationUser) {
-        System.out.println(applicationUser.getEmail());
-        System.out.println(applicationUser.getPassword());
+        System.out.println("User " + applicationUser.getEmail()+ " with role " + applicationUser.getRole().name() + " has logged in.");
         this.applicationUser = applicationUser;
         this.favoriteBookIds = applicationUser.getFavoriteBooks().stream().map(Book::getBookId).toList();
     }
