@@ -19,6 +19,7 @@ public class SecurityUser implements UserDetails {
 
     public SecurityUser(ApplicationUser applicationUser) {
         System.out.println("User " + applicationUser.getEmail()+ " with role " + applicationUser.getRole().name() + " has logged in.");
+
         this.applicationUser = applicationUser;
         this.favoriteBookIds = applicationUser.getFavoriteBooks().stream().map(Book::getBookId).toList();
     }

@@ -6,7 +6,10 @@ import be.hogent.springbook.book.entity.Location;
 import be.hogent.springbook.book.entity.dto.AuthorDto;
 import be.hogent.springbook.book.entity.dto.BookDto;
 import be.hogent.springbook.book.entity.dto.LocationDto;
+import be.hogent.springbook.user.entity.ApplicationUser;
+import be.hogent.springbook.user.entity.UserRole;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TestData {
@@ -16,7 +19,7 @@ public class TestData {
     private static final Integer TEST_LOCATION_CODE2 = 300;
     private static final String TEST_LOCATION_NAME = "name";
     public static final double TEST_PRICE = 69.69;
-    public static final String TEST_ISBN = "TEST_ISBN";
+    public static final String TEST_ISBN = "9780134685991";
     public static final String TEST_TITLE = "TEST_TITLE";
     public static final String BOOK_NOT_FOUND = "Book not found.";
 
@@ -74,4 +77,7 @@ public class TestData {
                 .build();
     }
 
+    public static ApplicationUser getApplicationUser(){
+        return ApplicationUser.builder().userId(TEST_ID).favoriteBooks(new ArrayList<>()).role(UserRole.ADMIN).build();
+    }
 }

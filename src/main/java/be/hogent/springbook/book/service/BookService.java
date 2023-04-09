@@ -106,7 +106,6 @@ public class BookService {
     public String markBookAsFavorite(String userId, String bookId) {
         log.info("(un)Mark book as favorite for book {} and user {} called in service", bookId, userId);
         String feedbackMessage = "";
-
         ApplicationUser potentialApplicationUser = userService.getById(userId);
         Book potentialBook = this.getById(bookId);
 
@@ -123,13 +122,7 @@ public class BookService {
             userService.saveUser(potentialApplicationUser);
             feedbackMessage = messageSource.getMessage("book", null, LocaleContextHolder.getLocale()) + messageSource.getMessage("been.unfavorited", null, LocaleContextHolder.getLocale());
         }
-
-        log.info("Refreshing security context user with new favorites.");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SecurityUser loggedInUser = (SecurityUser) authentication.getPrincipal();
-        loggedInUser.setFavoriteBookIds(potentialApplicationUser.getFavoriteBooks().stream().map(Book::getBookId).toList());
-        Authentication updatedAuthentication = new UsernamePasswordAuthenticationToken(loggedInUser, loggedInUser.getPassword(), loggedInUser.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
+        refreshSecurityContextUser(potentialApplicationUser);
         return feedbackMessage;
     }
 
@@ -147,6 +140,15 @@ public class BookService {
         log.info("Filtering dummy data from Thymeleaf.");
         newBook.setAuthors(newBook.getAuthors().stream().filter(author -> !author.getName().isBlank()).toList());
         newBook.setLocations(newBook.getLocations().stream().filter(location -> !(location.getLocationCode1() == null || location.getLocationCode2() == null && location.getLocationName().isBlank())).toList());
+    }
+
+    private static void refreshSecurityContextUser(ApplicationUser potentialApplicationUser) {
+        log.info("Refreshing security context user with new favorites.");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SecurityUser loggedInUser = (SecurityUser) authentication.getPrincipal();
+        loggedInUser.setFavoriteBookIds(potentialApplicationUser.getFavoriteBooks().stream().map(Book::getBookId).toList());
+        Authentication updatedAuthentication = new UsernamePasswordAuthenticationToken(loggedInUser, loggedInUser.getPassword(), loggedInUser.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
     }
 }
 
